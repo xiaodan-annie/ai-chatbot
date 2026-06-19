@@ -1,0 +1,195 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+}
+
+/* ===== APP LAYOUT ===== */
+.app-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 260px;
+    background: #1f2937;
+    color: white;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.sidebar button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Conversation item */
+.conversation-item {
+    padding: 10px;
+    background: #374151;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.conversation-item:hover {
+    background: #4b5563;
+}
+
+.conversation-item.active {
+    background: #2563eb;
+}
+
+/* ===== CHAT AREA ===== */
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Chat box */
+.chat-box {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #f9fafb;
+    border-radius: 10px;
+}
+
+/* ===== MESSAGES ===== */
+.message {
+    max-width: 70%;
+    padding: 12px 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+/* User bubble */
+.message.user {
+    background: #2563eb;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+/* Assistant bubble */
+.message.assistant {
+    background: #e5e7eb;
+    color: #111827;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+
+/* ===== INPUT AREA ===== */
+.input-area {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background: #2563eb;
+    color: white;
+    border-radius: 6px;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+/* ===== DELETE BUTTON ===== */
+.delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+}
+
+.delete-btn:hover {
+    transform: scale(1.2);
+}
+.dot {
+    animation: blink 1.4s infinite;
+    font-size: 18px;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+}
+
+.code-block-wrapper {
+    position: relative;
+    background: #1f2937;
+    border-radius: 8px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.code-block-wrapper pre {
+    margin: 0;
+    padding: 12px;
+    overflow-x: auto;
+    color: #e5e7eb;
+    font-size: 13px;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: #374151;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.copy-btn:hover {
+    background: #4b5563;
+}
+
+.language-bar {
+    margin-bottom: 10px;
+}
+
+#language-select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}

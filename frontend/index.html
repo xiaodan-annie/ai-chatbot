@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Chatbot</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="language-bar">
+
+    <select id="language-select">
+
+        <option value="English">English</option>
+
+        <option value="Spanish">Spanish</option>
+
+        <option value="French">French</option>
+
+        <option value="Chinese">Chinese</option>
+
+        <option value="Japanese">Japanese</option>
+
+        <option value="Korean">Korean</option>
+
+    </select>
+
+</div>
+
+<div class="app-container">
+
+    <div class="sidebar">
+
+        <button onclick="createNewChat()">
+            + New Chat
+        </button>
+
+        <div id="conversation-list"></div>
+
+    </div>
+
+    <div class="chat-container">
+
+        <h1>AI Chatbot</h1>
+
+        <div id="chat-box" class="chat-box"></div>
+        <div class="language-bar">
+
+            <label for="language-select">
+                Language:
+            </label>
+
+            <select id="language-select">
+                <option value="Auto">
+                    Auto Detect
+                </option>
+                <option value="Chinese">
+                    Chinese
+                </option>
+
+                <option value="English">
+                    English
+                </option>
+
+                <option value="Spanish">
+                    Spanish
+                </option>
+
+                <option value="French">
+                    French
+                </option>
+
+                <option value="Japanese">
+                    Japanese
+                </option>
+
+                <option value="Korean">
+                    Korean
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="input-area">
+
+            <input
+                id="message"
+                type="text"
+                placeholder="Type your message..."
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
