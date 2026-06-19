@@ -1,4 +1,11 @@
+
 .env
+# Python
 __pycache__/
 *.pyc
-venv/
+
+# Database
+*.db
+
+# Windows temporary
+*.txt
