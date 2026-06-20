@@ -32,10 +32,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-load_dotenv()
+# Add codes below
+#import os
+from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
+#print("OPENAI_API_KEY =", os.getenv("OPENAI_API_KEY"))
 
 Base.metadata.create_all(bind=engine)
-
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
 )
