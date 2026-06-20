@@ -59,7 +59,8 @@ window.addEventListener("load", async () => {
 // =====================
 async function createNewChat() {
     const response = await fetch(
-        `http://127.0.0.1:8000/new-chat?session_id=${sessionId}`,
+        //`http://127.0.0.1:8000/new-chat?session_id=${sessionId}`,
+        `https://ai-chatbot-5srb.onrender.com/new-chat?session_id=${sessionId}`,
         {
             method: "POST"
         }
@@ -78,7 +79,8 @@ async function createNewChat() {
 // =====================
 async function loadConversations() {
     const response = await fetch(
-        `http://127.0.0.1:8000/conversations/${sessionId}`
+        //`http://127.0.0.1:8000/conversations/${sessionId}`
+        `https://ai-chatbot-5srb.onrender.com/conversations/${sessionId}`
     );
 
     const conversations = await response.json();
@@ -170,7 +172,8 @@ async function sendMessage() {
 
     // Send request
     const response = await fetch(
-        "http://127.0.0.1:8000/chat",
+        //"http://127.0.0.1:8000/chat",
+        "https://ai-chatbot-5srb.onrender.com/chat",
         {
             method: "POST",
             headers: {
@@ -222,7 +225,8 @@ async function loadMessages(conversationId) {
     chatBox.innerHTML = "";
 
     const response = await fetch(
-        `http://127.0.0.1:8000/messages/${conversationId}`
+        //`http://127.0.0.1:8000/messages/${conversationId}`
+        `https://ai-chatbot-5srb.onrender.com/messages/${conversationId}`
     );
 
     const messages = await response.json();
@@ -255,7 +259,8 @@ async function deleteConversation(conversationId) {
     if (!confirmed) return;
 
     await fetch(
-        `http://127.0.0.1:8000/conversation/${conversationId}`,
+        //`http://127.0.0.1:8000/conversation/${conversationId}`,
+        `https://ai-chatbot-5srb.onrender.com/conversation/${conversationId}`,
         {
             method: "DELETE"
         }
