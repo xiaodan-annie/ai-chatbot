@@ -163,7 +163,7 @@ async function sendMessage() {
         console.log("Adding user bubble");
 
         console.log("Calling addMessage()");
-        //addMessage(userMessage, "user");
+        addMessage(userMessage, "user");
         console.log("addMessage completed");
 
         console.log("Building payload");
