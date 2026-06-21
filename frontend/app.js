@@ -139,84 +139,101 @@ async function loadConversations() {
 // Send Message (Streaming)
 // =====================
 async function sendMessage() {
-    const messageInput = document.getElementById("message");
-    const chatBox = document.getElementById("chat-box");
+    try {
+        const messageInput = document.getElementById("message");
+        const chatBox = document.getElementById("chat-box");
 
-    const userMessage = messageInput.value;
-    const selectedLanguage = document.getElementById("language-select").value;
+        const userMessage = messageInput.value;
+        const selectedLanguage = document.getElementById("language-select").value;
 
-    //add some log messages
-    console.log("sendMessage called");
-    console.log("currentConversationId BEFORE:",
+        //add some log messages
+        console.log("sendMessage called");
+        console.log("currentConversationId BEFORE:",
                 currentConversationId);
-    console.log("User message:", userMessage);
+        console.log("User message:", userMessage);
 
-    if (!userMessage.trim()) {
-        console.log("Empty message, exiting");
-        return;
-    }
-
-    //if (!userMessage.trim()) return;
-    // end of log messages
-    
-    // Ensure conversation exists
-    if (!currentConversationId) {
-        await createNewChat();
-    }
-
-    // Add user bubble
-    const userDiv = document.createElement("div");
-    userDiv.className = "message user";
-    userDiv.innerText = userMessage;
-    chatBox.appendChild(userDiv);
-
-    messageInput.value = "";
-
-    // Add AI bubble
-    const aiDiv = document.createElement("div");
-    aiDiv.className = "message assistant";
-    aiDiv.innerText = "";
-    chatBox.appendChild(aiDiv);
-
-    //chatBox.scrollTop = chatBox.scrollHeight;
-    smartScroll(chatBox);
-
-    // Send request
-    const response = await fetch(
-        //"http://127.0.0.1:8000/chat",
-        "https://ai-chatbot-5srb.onrender.com/chat",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: userMessage,
-                language: selectedLanguage,
-                session_id: sessionId,
-                conversation_id: currentConversationId
-            })
+        if (!userMessage.trim()) {
+            console.log("Empty message, exiting");
+            return;
         }
-    );
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
 
-    let fullText = "";
+        //if (!userMessage.trim()) return;
+        // end of log messages
+        console.log("Adding user bubble");
 
-    while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+        addMessage(userMessage, "user");
 
-        const chunk = decoder.decode(value);
-        fullText += chunk;
+        console.log("Building payload");
 
-        aiDiv.innerText = fullText;
+        // Ensure conversation exists
+        if (!currentConversationId) {
+            await createNewChat();
+        }
+
+        // Add user bubble
+        const userDiv = document.createElement("div");
+        userDiv.className = "message user";
+        userDiv.innerText = userMessage;
+        chatBox.appendChild(userDiv);
+
+        messageInput.value = "";
+
+        // Add AI bubble
+        const aiDiv = document.createElement("div");
+        aiDiv.className = "message assistant";
+        aiDiv.innerText = "";
+        chatBox.appendChild(aiDiv);
+
         //chatBox.scrollTop = chatBox.scrollHeight;
         smartScroll(chatBox);
-    }
 
-    // FINAL markdown render (after streaming ends)
-    aiDiv.innerHTML = marked.parse(fullText);
+        // Send request
+        const response = await fetch(
+            //"http://127.0.0.1:8000/chat",
+            "https://ai-chatbot-5srb.onrender.com/chat",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: userMessage,
+                    language: selectedLanguage,
+                    session_id: sessionId,
+                    conversation_id: currentConversationId
+                })
+            }
+        );
+        console.log("Response received");
+        console.log("Status:", response.status);
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        let fullText = "";
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value);
+            fullText += chunk;
+
+            aiDiv.innerText = fullText;
+            //chatBox.scrollTop = chatBox.scrollHeight;
+            smartScroll(chatBox);
+        }
+
+        // FINAL markdown render (after streaming ends)
+        aiDiv.innerHTML = marked.parse(fullText);
+    } catch (err) {
+
+        console.error(
+            "sendMessage FAILED:",
+            err
+        );
+
+    }
 }
 
 // =====================
