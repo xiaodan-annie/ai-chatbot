@@ -209,7 +209,7 @@ async function sendMessage() {
         );
         console.log("Response received");
         console.log("Status:", response.status);
-
+        /*
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
 
@@ -229,6 +229,13 @@ async function sendMessage() {
 
         // FINAL markdown render (after streaming ends)
         aiDiv.innerHTML = marked.parse(fullText);
+        */
+        const text = await response.text();
+
+        console.log("RAW RESPONSE:");
+        console.log(text);
+
+        aiDiv.innerText = text;
     } catch (err) {
 
         console.error(
