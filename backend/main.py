@@ -38,9 +38,9 @@ app.add_middleware(
 from dotenv import load_dotenv
 from pathlib import Path
 
-env_path = Path(__file__).resolve().parent.parent / ".env"
-load_dotenv(dotenv_path=env_path, override=True)
-#print("OPENAI_API_KEY =", os.getenv("OPENAI_API_KEY"))
+#env_path = Path(__file__).resolve().parent.parent / ".env"
+#load_dotenv(dotenv_path=env_path, override=True)
+##print("OPENAI_API_KEY =", os.getenv("OPENAI_API_KEY"))
 
 Base.metadata.create_all(bind=engine)
 client = OpenAI(
@@ -61,6 +61,9 @@ class ChatRequest(BaseModel):
 # =====================
 @app.post("/chat")
 async def chat(req: ChatRequest):
+    print("========== CHAT HIT ==========")
+    print("Message:", request.message)
+    print("Conversation:", request.conversation_id)
 
     db: Session = SessionLocal()
 
@@ -116,16 +119,25 @@ async def chat(req: ChatRequest):
         })
 
     def generate():
-
-        stream = client.chat.completions.create(
+        try: 
+            print("Calling OpenAI...")
+            stream = client.chat.completions.create(
             model="gpt-4.1-mini",
             messages=messages,
             stream=True
-        )
+            )
+            print("OpenAI returned:")
+            print(type(stream))
+
+        except Exception as e:
+            print("GENERATOR ERROR:", str(e))
+            raise
 
         full_reply = ""
 
         for chunk in stream:
+            print("Chunk:", chunk)
+
             if chunk.choices[0].delta.content:
                 content = chunk.choices[0].delta.content
                 full_reply += content
@@ -140,7 +152,7 @@ async def chat(req: ChatRequest):
         db.add(assistant_message)
         db.commit()
         db.close()
-
+    
     return StreamingResponse(
         generate(),
         media_type="text/plain"
