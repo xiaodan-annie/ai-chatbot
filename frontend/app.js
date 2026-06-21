@@ -191,6 +191,8 @@ async function sendMessage() {
         smartScroll(chatBox);
 
         // Send request
+        console.log("Calling URL:",
+            "https://ai-chatbot-5srb.onrender.com/chat");
         const response = await fetch(
             //"http://127.0.0.1:8000/chat",
             "https://ai-chatbot-5srb.onrender.com/chat",
