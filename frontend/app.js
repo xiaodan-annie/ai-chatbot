@@ -4,7 +4,7 @@ renderer.code = function (code, infostring, escaped) {
 
     // FIX: normalize input safely
     let rawCode = "";
-
+HTMLOutputElement
     if (typeof code === "string") {
         rawCode = code;
     } else if (code && typeof code.text === "string") {
@@ -139,15 +139,26 @@ async function loadConversations() {
 // Send Message (Streaming)
 // =====================
 async function sendMessage() {
-
     const messageInput = document.getElementById("message");
     const chatBox = document.getElementById("chat-box");
 
     const userMessage = messageInput.value;
     const selectedLanguage = document.getElementById("language-select").value;
 
-    if (!userMessage.trim()) return;
+    //add some log messages
+    console.log("sendMessage called");
+    console.log("currentConversationId BEFORE:",
+                currentConversationId);
+    console.log("User message:", userMessage);
 
+    if (!userMessage.trim()) {
+        console.log("Empty message, exiting");
+        return;
+    }
+
+    //if (!userMessage.trim()) return;
+    // end of log messages
+    
     // Ensure conversation exists
     if (!currentConversationId) {
         await createNewChat();
