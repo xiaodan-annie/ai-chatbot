@@ -62,8 +62,8 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 async def chat(req: ChatRequest):
     print("========== CHAT HIT ==========")
-    print("Message:", request.message)
-    print("Conversation:", request.conversation_id)
+    print("Message:", req.message)
+    print("Conversation:", req.conversation_id)
 
     db: Session = SessionLocal()
 
