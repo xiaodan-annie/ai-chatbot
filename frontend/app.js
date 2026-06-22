@@ -161,10 +161,11 @@ async function sendMessage() {
         // end of log messages
         console.log("Passed empty-message check");
         console.log("Adding user bubble");
-
+        /*
         console.log("Calling addMessage()");
         addMessage(userMessage, "user");
         console.log("addMessage completed");
+        */
 
         console.log("Building payload");
 
